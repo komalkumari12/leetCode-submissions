@@ -1,9 +1,19 @@
-/* Approach
- step1: put elements of stack1 into stack2
- step2: push element to stack1
- step3: put elements of stack2 to stack1
- */
-
+/*Approach
+ for push:
+  push elements into stack1
+  
+ for pop:
+  if(stack2 is not empty)
+   pop stop element of stack2
+   
+  else
+  transfer all elements of stack1 into stack2
+    if then 
+    stack2 is empty:  Queue is empty
+    stack2 is not empty: pop top element of stack2
+    
+*/    
+    
 class MyQueue {
 public:
     stack<int> s1,s2 ;
@@ -13,53 +23,60 @@ public:
     }
     
     void push(int x) {
-        while(!s1.empty()){
-            s2.push(s1.top()) ;
-            s1.pop() ;
-        }
-        
-        s1.push(x);
-        
-        while(!s2.empty()){
-            s1.push(s2.top()) ;
-            s2.pop() ;
-        }
-        
+        s1.push(x) ;
     }
     
     int pop() {
         if(empty()){
             cout<<" Queue is empty " ;
-            return -1;
+            return -1 ;
         }
-        int ans=s1.top() ;
-        s1.pop() ;
         
+        int ans;
+        if(!s2.empty()){
+            ans=s2.top() ;
+            s2.pop() ;
+        }
+        
+        else{
+            while(!s1.empty()){
+                s2.push(s1.top()) ;
+                s1.pop() ;
+            }
+            
+            if(!s2.empty()){
+                ans=s2.top() ;
+                s2.pop() ;
+            }
+            else
+                ans=-1 ;
+        }   
         return ans;
     }
     
     int peek() {
-        if(empty()){
-            cout<<" Queue is empty " ;
-            return -1 ;
+        if(empty()) return -1;
+        if(!s2.empty()){
+            return s2.top() ;
         }
-        
-        return s1.top() ;
+        else{
+            while(!s1.empty()){
+                s2.push(s1.top()) ;
+                s1.pop() ;
+            }
+            
+            if(!s2.empty()){
+                return s2.top() ;
+            }   
+            else
+                return -1 ;
+        }  
+        return s2.top() ;
     }
     
     bool empty() {
-        if(s1.empty())
-            return true;
-        else
-            return false ;
+      return s1.empty() && s2.empty();
+        
     }
 };
 
-/**
- * Your MyQueue object will be instantiated and called as such:
- * MyQueue* obj = new MyQueue();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->peek();
- * bool param_4 = obj->empty();
- */
