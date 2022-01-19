@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> generateMatrix(int n) {
         vector<vector<int>> ans( n , vector<int>(n) ) ;
-        if(n < 2) return {{1}};
+        // if(n < 2) return {{1}};
         
         int top = 0 , down = n-1 ;
         int left =0 , right = n-1 ;
