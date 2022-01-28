@@ -1,33 +1,27 @@
-/*  Approach
-  Converting linked list problem into vector problem
-  
-  1. storing list in vector
-  2. applying binary search on vector and creating linked list
-*/  
-
 class Solution {
-public:
-    TreeNode* build(vector<int>& nums ,int start, int end){
-        if(start <= end){
-            int mid =start + (end-start)/2 ;
-            
-            TreeNode* root= new TreeNode(nums[mid]) ;
-            root->left =build(nums, start, mid-1) ;
-            root->right =build(nums, mid+1, end) ;
-            return root;
-        }
-        return NULL ;
-    }
-    
+public:   
     TreeNode* sortedListToBST(ListNode* head) {
-        vector<int> nums;
+        if(!head)  return NULL ;
+        if(!head->next){
+            TreeNode* root = new TreeNode(head->val) ;
+            return root ;
+        } 
         
-        while(head!=NULL){
-            nums.push_back(head->val) ;
-            head=head->next ;
+        ListNode* slow=head, *fast=head->next->next ;
+        
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next ;
+            fast=fast->next->next ;
         }
         
-        return build(nums, 0, nums.size()-1) ;
+        ListNode* temp=slow->next ;
+        slow->next=NULL ;
+        
+        TreeNode* root=new TreeNode(temp->val) ;
+        root->left=sortedListToBST(head) ;
+        root->right=sortedListToBST(temp->next);
+        
+        return root ;
         
     }
 };
