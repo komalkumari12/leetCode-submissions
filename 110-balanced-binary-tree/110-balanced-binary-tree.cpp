@@ -1,29 +1,41 @@
 /* Approach
-     1. find the max height at of all nodes
-     2. if at any given time height rh or lh becommes equal to -1  OR  absolute difference of lh and rh becomes -1 return false 
-     3. else tree is balanced binary tree
-*/     
-     
+     1.Find lh and rh of every node 
+     2.if absolute difference of lh and rh is greater than 1 return false
+*/
+
 class Solution {
 public:
-    int check(TreeNode* root){
+    int leftHeight(TreeNode*root){
         if(root==NULL) return 0 ;
         
-        int lh=check(root->left) ;
-        if(lh==-1) return -1 ;
-        int rh=check(root->right) ;
-        if(rh==-1) return -1 ;
-    
-        if(abs(lh-rh) > 1) return -1;
+        int lh=leftHeight(root->left) ;
+        int rh=leftHeight(root->right) ;
         
-        return 1+max(lh,rh) ;
+        return 1+ max(lh,rh) ;
     }
+    
+    int rightHeight(TreeNode*root){
+        if(root==NULL) return 0 ;
         
+        int rh=rightHeight(root->right) ;
+        int lh=rightHeight(root->left) ;
+        
+        return 1+ max(lh,rh) ;
+    }
+     
     bool isBalanced(TreeNode* root) {
-        int result =check(root) ;
-        if(result==-1)
-            return false ;
-        else
-            return true ;   
+        if(root==NULL) return true ;
+        
+        int lh= leftHeight(root->left) ;
+        int rh= rightHeight(root->right) ;
+        
+        if(abs(lh-rh)>1) return false ;
+        
+        bool left=isBalanced(root->left) ;
+        bool right=isBalanced(root->right) ;
+        
+        if(!left || !right) return false ;
+        else return true ;
+    
     }
 };
