@@ -1,37 +1,29 @@
 class Solution {
-    TreeNode* first ;
-    TreeNode* prev ;
-    TreeNode* middle ;
-    TreeNode* last ;
-    
-public:
-    void inorder(TreeNode* root){
-        if(root==NULL) return ;
-    
-        inorder(root->left) ;
+    vector<int>inorder ;
+    int index=0 ;
+public: 
+    void inorderTraversal(TreeNode* root){
+        if(root == NULL)  return ;
         
-        if(prev!=NULL  &&  root->val < prev->val){
-            if(first==NULL){
-                first=prev;
-                middle=root;
-            }
-            else
-                last=root;
-        }
-        
-        prev=root ;
-        inorder(root->right) ;
+        inorderTraversal(root->left) ;
+        inorder.push_back(root->val) ;
+        inorderTraversal(root->right) ;
     }
     
-    
-    void recoverTree(TreeNode* root) {
-        first=last=middle=NULL ;
-        TreeNode* prev=new TreeNode(INT_MIN) ;
+    void swapNodes(TreeNode* root){
+        if(root==NULL) return ;
         
-        inorder(root) ;
-        if(first  &&  last)
-            swap(first->val , last->val) ;
-        else
-            swap(first->val , middle->val) ;
+        swapNodes(root->left) ;
+        if(root->val != inorder[index])
+            root->val = inorder[index] ;
+        index++ ;
+        swapNodes(root->right) ;     
+    }
+        
+    void recoverTree(TreeNode* root) {
+        inorderTraversal(root) ;
+        sort(inorder.begin() , inorder.end()) ;
+        
+        swapNodes(root) ;  
     }
 };
