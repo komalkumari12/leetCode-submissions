@@ -1,28 +1,25 @@
+/* Approach
+    1. vector ans is first initialised with values of product of left subArray
+    2. variable prod takes product of right subArray
+*/    
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        int n =nums.size() ;
-        vector<int> left(n);   
-        vector<int> right(n); 
-        vector<int> ans(n) ;
-        int prev =1 ;
+        int n=nums.size()  ;
+        vector<int> ans (n) ;
+        int prod = 1 ;
         
-        for(int i=0 ; i<n ;i++){
-            left[i] = prev*nums[i] ;
-            prev *=nums[i] ;
-        }  
-        prev =1 ;
-        for(int i= n-1 ;i>= 0; i--){
-            right[i] = prev*nums[i] ;
-            prev *= nums[i] ;  
+        for(int i=0 ; i<n; i++){
+            ans[i] = prod*nums[i] ;
+            prod *= nums [i] ;
         }
-        
-        for(int i= 1; i<n-1 ;i++){
-            ans[i] = left[i-1] * right[i+1] ;
+        prod =1 ;
+        for(int i = n-1 ; i>0 ;i--){
+            ans[i] = ans[i-1]* prod;
+            prod *= nums[i] ;
         }
-        ans[0] = right[1] ;
-        ans[n-1] = left [n-2] ;
-        
+        ans[0] =prod ;
+                        
         return ans ;
     }
 };
