@@ -1,10 +1,10 @@
-// TC : O(1)
-//Approach  AND of n and n-1 will be 0 if n is power of two
-
 class Solution {
 public:
+    // TC : o(1)   
     bool isPowerOfTwo(int n){
-        return ( n>0  && !(n& (n-1))) ;
+        
+        if(n == 0) return false  ;
+        return ceil(log2(n)) == floor(log2(n)) ;
     }
-};
 
+};
