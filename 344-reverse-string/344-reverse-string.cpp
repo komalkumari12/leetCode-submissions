@@ -1,18 +1,13 @@
 class Solution {
 public:
+    void rev(vector<char>&s ,int start ,int end){
+        if(start > end) return  ;
+        
+        swap(s[start] , s[end]) ;
+        return rev(s ,start+1 ,end-1) ;
+    }
+        
     void reverseString(vector<char>& s) {
-        stack<char> st ;
-        
-        for(int i =0 ;i<s.size() ;i++)
-            st.push(s[i]) ;
-        
-        int i=0 ;
-        while(!st.empty()){
-            int top = st.top() ;
-            st.pop() ;
-            
-            s[i] = top ;
-            i++ ;
-        }
+        rev(s ,0 ,s.size()-1) ;
     }
 };
