@@ -1,28 +1,28 @@
 class Solution {
 public:
-    void sum( int index ,int  target, vector<int>& candidates , vector<vector<int>>&ans , vector<int>& arr ){
-        if(index == candidates.size()){
-            if(target == 0){
-                ans.push_back(arr) ;
+    void sum(int ind ,int target ,vector<int>& candidates ,vector<vector<int>>&ans ,vector<int>& ds){
+        if(ind == candidates.size()){
+            if(target==0){
+                ans.push_back(ds) ;
             }
-            return ;
+            return  ;
+        }
+        //pick 
+        if(candidates[ind] <= target ){
+            ds.push_back(candidates[ind]) ;
+            sum(ind ,target-candidates[ind] ,candidates ,ans ,ds) ;
+            ds.pop_back() ;
         }
         
-        if(candidates[index] <= target){
-            arr.push_back(candidates[index]) ;
-            sum(index ,target - candidates[index], candidates , ans, arr) ;
-            
-            arr.pop_back() ;
-        }
-        sum(index + 1 ,target, candidates  ,ans, arr) ;
-    } 
-    
+        sum(ind+1,target ,candidates ,ans,ds) ;
+        
+    }
+        
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> ans ;
-        vector<int> arr ;
+        vector<int> ds ;
         
-        sum(0, target ,candidates , ans, arr ) ;
-        
-        return ans ;
+        sum(0, target ,candidates , ans, ds) ;
+        return ans; 
     }
 };
