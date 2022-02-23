@@ -1,15 +1,14 @@
 class Solution {
 public:
-    bool isSymmetricHelp(TreeNode* left ,TreeNode* right){
+    bool check(TreeNode* left ,TreeNode* right){
         if(!left && !right) return true ;
-        if((!left  &&  right)  ||  (left  &&  !right)) return false ;
+        if((!left && right) || (left && !right)) return false ;
         
-        if(left->val != right->val) return false ;
+        if(left->val != right->val) return false;
         
-        return isSymmetricHelp(left->left , right->right)  &&   isSymmetricHelp(left->right , right->left) ;
+        return check(left->left ,right->right) && check(left->right ,right->left) ;
     }
-        
     bool isSymmetric(TreeNode* root) {
-        return isSymmetricHelp(root->left ,root->right) ;
+        return check(root->left , root->right) ;
     }
 };
