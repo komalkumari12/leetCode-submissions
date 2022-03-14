@@ -1,14 +1,23 @@
-/* approach 
+/* Approach
     1.convert adj matrix to adj list
-    2.apply bfs or dfs on adjlist
+    2. apply dfs on adj list
 */    
 
 class Solution {
 public:
-    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+    void dfs(int node, vector<bool> &vis , vector<vector<int>> &adjList){
+        vis[node] = true ;
         
+        for(auto it: adjList[node]){
+            if(!vis[it]){
+                dfs(it, vis, adjList) ;
+            }
+        }
+    }
+    
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
         vector<vector<int>> adjList(n) ;
-        int u ,v ;
+        int u,v ;
         
         for(int i=0; i<edges.size() ;i++){
             u=edges[i][0] ;
@@ -18,25 +27,10 @@ public:
             adjList[v].push_back(u) ;
         }
         
+        vector<bool> vis(n+1 ,false) ;
         
-        vector<bool> vis(n+1 , false) ;
-        queue<int> q;
-        q.push(source) ;
+        dfs(source, vis, adjList) ;
         
-        vis[source] = true ;
-        
-        while(!q.empty()){
-            int currNode= q.front() ;
-            q.pop() ;
-            
-            for(auto it : adjList[currNode]){
-                if(!vis[it]){
-                    q.push(it) ;
-                    vis[it] = true ;
-                }
-            }
-        }
-        
-        return vis[destination] ? true : false ;
+        return vis[destination] ? true : false ; 
     }
 };
