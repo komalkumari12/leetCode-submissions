@@ -5,21 +5,20 @@ using namespace std;
  // } Driver Code Ends
 class Solution
 {
-    vector<int> ans ;
-    
-    void findSum(int ind, int sum , vector<int>& arr){
+    void findSum(int ind, int sum , vector<int>& arr, vector<int>& ans){
         if(ind == arr.size()){
             ans.push_back(sum) ;
             return ;
         }
         
-        findSum(ind+1, sum+arr[ind], arr) ;
-        findSum(ind+1, sum, arr) ;
+        findSum(ind+1, sum+arr[ind], arr, ans) ;
+        findSum(ind+1, sum, arr, ans) ;
     }
 public:
     vector<int> subsetSums(vector<int> arr, int N)
     {
-        findSum(0,0, arr) ;
+        vector<int> ans ;
+        findSum(0,0, arr, ans) ;
         
         return ans ;
     }
