@@ -91,27 +91,15 @@ int main() {
     return 1;
 }// } Driver Code Ends
 
+int findMin(Node* root){
+    if(!root) return -1 ;
+    if(!root->left) return  root->data;
+    
+    return findMin(root->left) ;
+}
 
 // Function to find the minimum element in the given BST.
 int minValue(Node* root) {
-    if(!root) return -1;
     
-    queue<Node*> q ;
-    q.push(root) ;
-    
-    int ans ;
-    while(!q.empty()){
-        int size = q.size() ;
-        
-        for(int i=0; i<size; i++){
-            Node* node = q.front() ;
-            q.pop() ;
-            
-            ans = node->data ;
-            
-            if(node->left) q.push(node->left) ;
-        }
-    }
-    
-    return ans ;
+    return findMin(root) ;
 }
