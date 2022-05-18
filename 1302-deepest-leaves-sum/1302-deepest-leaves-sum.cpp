@@ -3,35 +3,35 @@ public:
     int height(TreeNode* root){
         if(!root) return 0 ;
         
-        int left=height(root->left) ;
-        int right=height(root->right) ;
+        int left = height(root->left) ;
+        int right = height(root->right) ;
         
-        return max(left,right) + 1;
+        return 1 + max(left , right) ;
     }
-        
     int deepestLeavesSum(TreeNode* root) {
-        if(!root) return 0 ;
-        int depth= height(root) ;
-        
         queue<TreeNode*> q ;
         q.push(root) ;
+        int sum =0 ;
         
-        int sum= 0;
-        int level=0 ;
+        int level = height(root) ;
         
         while(!q.empty()){
-            int size=q.size() ;
-            level++ ;
+            int size = q.size() ;
+            level-- ;
             
-            for(int i=0; i<size ;i++){
-                TreeNode* node= q.front() ;
+            for(int i=0; i<size; i++){
+                TreeNode* node =q.front() ;
                 q.pop() ;
                 
-                if(level==depth)
-                    sum+=node->val ;
+                if(level == 0){
+                    sum += node->val ;
+                }
                 
-                if(node->left)  q.push(node->left) ;
-                if(node->right) q.push(node->right) ;
+                if(node->left)
+                    q.push(node->left);
+                if(node->right)
+                    q.push(node->right) ;
+            
             }
         }
         
