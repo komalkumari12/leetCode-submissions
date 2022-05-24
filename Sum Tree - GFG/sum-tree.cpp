@@ -97,17 +97,24 @@ class Solution
     public:
     bool ans = true ;
     
+    bool leaf(Node* root){
+        if(!root->left && !root->right)
+            return true ; 
+        return false ;
+    }
+    
     int check(Node* root){
-        if(!root) return  0; 
-        if(!root->left && !root->right) return root->data ;
+        if(!root) return 0;
         
-        int l = check(root->left) ;
-        int r = check(root->right) ;
-        
-        if(root->data != l + r)
+        int ls = check(root->left) ;
+        int rs = check(root->right) ;
+      
+        if(!leaf(root) && root->data != ls + rs)
             ans = false ;
             
-        return l + r + root->data ;    
+        // root->data = ls + rs ;
+        
+        return root->data + ls + rs ;
     }
     
     bool isSumTree(Node* root)
