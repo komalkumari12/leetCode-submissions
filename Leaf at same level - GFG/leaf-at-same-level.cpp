@@ -101,34 +101,36 @@ class Solution{
     /*You are required to complete this method*/
     bool check(Node *root)
     {
+        if(!root) return true ;
         queue<Node*> q;
         q.push(root) ;
         
-        int depth =0;
-        vector<int> leafDepth ;
-        
+        int depth = 0, level1 = -1, level2 = -1 ;
         while(!q.empty()){
             int size = q.size() ;
             
             for(int i=0; i<size; i++){
                 Node* node = q.front() ;
                 q.pop() ;
+                depth++ ;
                 
-                
-                if(node->left) q.push(node->left) ;
-                if(node->right) q.push(node->right) ;
-                else if(!node->left && !node->right){
-                    leafDepth.push_back(depth) ;
-                }
+                if(node->left)
+                    q.push(node->left) ;
+                if(node->right)
+                    q.push(node->right) ;  
+                    
+                if(!node->left && !node->right){
+                    if(level1 == -1)
+                        level1 = depth ;
+                    else
+                        level2 = depth ;
+                }    
             }
-            depth++ ;
+            
+            if(!q.empty()  &&  level1 != level2) return false ; 
         }
         
-        int ind = leafDepth[0] ;
-        for(int i=1; i<leafDepth.size(); i++)
-            if(ind != leafDepth[i]) return false ;
-            
-        return true ;    
+        return true ;
     }
 };
 
