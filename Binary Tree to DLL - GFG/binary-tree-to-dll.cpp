@@ -98,8 +98,8 @@ class Solution
     Node* head = NULL ; 
     Node* prev = NULL ;
     
-    Node* solve(Node* root){
-        if(!root) return NULL ;
+    void solve(Node* root){
+        if(!root) return ;
         
         solve(root->left) ;
         
