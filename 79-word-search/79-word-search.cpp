@@ -1,19 +1,19 @@
 class Solution {
 public:
     string str ="" ;
-    bool find(int ind, int i, int j, string word, vector<vector<char>>& board, vector<vector<bool>>& vis){
+    bool find(int ind, int i, int j, string word, vector<vector<char>>& board){
         if(ind == word.size()) return true ;
         if(i<0 || j<0 || i>=board.size() || j>=board[0].size() || board[i][j] != word[ind]) return false ;
-        if(vis[i][j] == true) return false ;
         
-        vis[i][j] = true ;
+        char ch = board[i][j]  ;
+        board[i][j] ='0' ;
         
-        bool down =find(ind+1, i+1, j, word, board, vis) ;
-        bool up =find(ind+1, i-1, j, word, board, vis) ;
-        bool right =find(ind+1, i, j+1, word, board, vis) ;
-        bool left =find(ind+1, i, j-1, word, board, vis) ;
+        bool down =find(ind+1, i+1, j, word, board) ;
+        bool up =find(ind+1, i-1, j, word, board) ;
+        bool right =find(ind+1, i, j+1, word, board) ;
+        bool left =find(ind+1, i, j-1, word, board) ;
         
-        vis[i][j] =false ;
+        board[i][j]  = ch ;
         
         return up || down || left || right ;
     }
@@ -25,9 +25,7 @@ public:
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 if(word[0] == board[i][j]){
-                    vector<vector<bool>> vis(n, vector<bool>(m, false)) ;
-                
-                    if(find(0, i, j, word, board, vis)) return true ;
+                    if(find(0, i, j, word, board)) return true ;
                 }
             }
         }
