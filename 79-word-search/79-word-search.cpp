@@ -8,14 +8,14 @@ public:
         char ch = board[i][j]  ;
         board[i][j] ='0' ;
         
-        bool down =find(ind+1, i+1, j, word, board) ;
-        bool up =find(ind+1, i-1, j, word, board) ;
-        bool right =find(ind+1, i, j+1, word, board) ;
-        bool left =find(ind+1, i, j-1, word, board) ;
+        bool res =find(ind+1, i+1, j, word, board) ||
+            find(ind+1, i-1, j, word, board) ||
+            find(ind+1, i, j+1, word, board) ||
+            find(ind+1, i, j-1, word, board) ;
         
         board[i][j]  = ch ;
         
-        return up || down || left || right ;
+        return res ;
     }
         
     bool exist(vector<vector<char>>& board, string word) {
