@@ -17,10 +17,7 @@ public:
         // find middle
         // reverse second half
         // check for palindrome
-        
-        if(head==NULL || head->next==NULL)
-            return true ;
-        
+
         ListNode* fast = head, *slow = head ;
         while(fast && fast->next){
             fast = fast->next->next ;
