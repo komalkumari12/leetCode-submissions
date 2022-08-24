@@ -1,6 +1,24 @@
+
 class Solution {
 public:
+    int count =0 ;
+    
+    void solve(int node, vector<bool>& vis, vector<vector<int>>& graph, set<int>& st){
+        vis[node] =true ;
+        
+        if(st.find(node) != st.end()) return ;
+        
+        for(auto it : graph[node]){
+            if(!vis[it]){
+                solve(it, vis, graph, st) ;
+            }
+        }
+        
+        count++ ;
+    }
+        
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+        vector<bool> vis(n, false) ;
         vector<vector<int>> graph(n) ;
         
         for(int i=0; i<edges.size(); i++){
@@ -16,34 +34,7 @@ public:
             st.insert(restricted[i]) ;
         }
         
-        
-        queue<int> q ;
-        q.push(0) ;
-        vector<bool> vis(n, false) ;
-        vis[0] = true ;
-            
-        int count =0 ;
-        while(!q.empty()){
-            int size = q.size() ;
-            
-            for(int i=0; i<size; i++){
-                int node = q.front() ;
-                q.pop() ;
-                
-                if(st.find(node) != st.end())   continue ;
-                count++ ;
-                
-                for(auto it : graph[node]){
-                    if(!vis[it]){
-                        q.push(it) ;
-                        vis[it] = true ;
-                    }
-                }
-            }
-        }
-        
+        solve(0, vis, graph, st) ;
         return count ;
     }
 };
-
-
