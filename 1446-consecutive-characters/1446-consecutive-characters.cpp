@@ -18,31 +18,10 @@ public:
             else{
                 left++ ;
             }
-            
+          
             right++ ;
-            if(right == s.size())   break ;
         }
         
         return maxP ;
     }
 };
-
-// class Solution {
-// public:
-//     int maxPower(string s) {
-//         int maxP = 1 ;
-//         int count =1 ;
-            
-//         for(int i=0; i<s.size()-1; i++){
-//             if(s[i] == s[i+1]){
-//                 count++ ;
-//                 maxP = max(maxP, count) ;
-//             }  
-//             else{
-//                 count =1 ;
-//             }
-//         }
-        
-//         return maxP ;
-//     }
-// };
