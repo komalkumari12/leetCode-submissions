@@ -1,32 +1,28 @@
 class Solution {
 public:
-    string str ="" ;
-    bool find(int ind, int i, int j, string word, vector<vector<char>>& board){
-        if(ind == word.size()) return true ;
-        if(i<0 || j<0 || i>=board.size() || j>=board[0].size() || board[i][j] != word[ind]) return false ;
+    bool searchWord(int i, int j, int ind, string word, vector<vector<char>>& board){
+        if(i>=board.size() || j>=board[0].size() || i<0 || j<0 || board[i][j] != word[ind])
+            return false ;
         
-        char ch = board[i][j]  ;
-        board[i][j] ='0' ;
+        if(ind == word.size()-1)    return true ;
+        char ch = board[i][j] ;
+        board[i][j] = '1' ;
         
-        bool res =find(ind+1, i+1, j, word, board) ||
-            find(ind+1, i-1, j, word, board) ||
-            find(ind+1, i, j+1, word, board) ||
-            find(ind+1, i, j-1, word, board) ;
+        bool ans = searchWord(i+1, j, ind+1, word, board) || searchWord(i-1, j, ind+1, word, board) || searchWord(i, j+1, ind+1, word, board) || searchWord(i, j-1, ind+1, word, board) ;
         
-        board[i][j]  = ch ;
+        board[i][j] = ch ;
         
-        return res ;
+        return ans ;
     }
-        
+    
     bool exist(vector<vector<char>>& board, string word) {
-        int n = board.size() ;
-        int m = board[0].size() ;
+        int n = board.size(), m = board[0].size() ;
         
-        for(int i=0; i<n; i++){
+        for(int i=0; i<n ;i++){
             for(int j=0; j<m; j++){
-                if(word[0] == board[i][j]){
-                    if(find(0, i, j, word, board)) return true ;
-                }
+                if(board[i][j] == word[0])
+                    if(searchWord(i, j ,0, word, board))
+                        return true ;
             }
         }
         
