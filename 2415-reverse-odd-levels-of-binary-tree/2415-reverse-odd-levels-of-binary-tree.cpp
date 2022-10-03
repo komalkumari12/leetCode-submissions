@@ -15,22 +15,18 @@ public:
                 q.pop() ;
                 
                 if(level%2 == 0){
-                    if(node->left){
-                        st.push(node->left->val) ;
-                        q.push(node->left) ;
-                    }
-                    if(node->right){
-                        st.push(node->right->val) ;
-                        q.push(node->right) ;
-                    }
+                    //EVEN Level
+                    if(node->left)   st.push(node->left->val) ;
+                    if(node->right)   st.push(node->right->val) ;
                 }
                 else{
+                    //ODD level
                     node->val = st.top() ;
                     st.pop() ;
-                    
-                    if(node->left)   q.push(node->left) ;
-                    if(node->right)   q.push(node->right) ;
                 }
+                    
+                if(node->left)   q.push(node->left) ;
+                if(node->right)   q.push(node->right) ;
             }
             
             level++ ;
