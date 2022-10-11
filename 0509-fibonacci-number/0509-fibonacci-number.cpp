@@ -1,9 +1,17 @@
 class Solution {
 public:
-    int fib(int num) {
+    int fibonacciNum(int num, vector<int>& dp){
         if(num <= 1)
             return num ;
         
-        return fib(num-1) + fib(num-2) ;
+        if(dp[num] != -1)
+            return dp[num] ;
+        
+        return dp[num] = fibonacciNum(num-1, dp) + fibonacciNum(num-2, dp) ;
+    }
+    int fib(int num) {
+        
+        vector<int> dp(num+1, -1) ;
+        return fibonacciNum(num, dp) ;
     }
 };
