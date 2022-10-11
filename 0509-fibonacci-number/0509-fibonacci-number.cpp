@@ -1,17 +1,20 @@
+//Using map
+
 class Solution {
 public:
-    int fibonacciNum(int num, vector<int>& dp){
+    int fibonacciNum(int num, map<int,int>& dp){
         if(num <= 1)
             return num ;
         
-        if(dp[num] != -1)
+        if(dp.find(num) != dp.end())
             return dp[num] ;
         
-        return dp[num] = fibonacciNum(num-1, dp) + fibonacciNum(num-2, dp) ;
+        dp[num] = fibonacciNum(num-1, dp) + fibonacciNum(num-2, dp) ;
+        return dp[num] ;
     }
     int fib(int num) {
         
-        vector<int> dp(num+1, -1) ;
+        map<int,int> dp ;
         return fibonacciNum(num, dp) ;
     }
 };
