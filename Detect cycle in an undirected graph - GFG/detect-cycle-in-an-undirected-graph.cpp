@@ -1,33 +1,35 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution {
   public:
-    bool dfs(int node, int parent, vector<int>& vis, vector<int> adj[]){
-        vis[node] = 1 ;
-        
-        for(auto it: adj[node]){
-            if(!vis[it]){
-                if(dfs(it, node, vis, adj))
-                    return true ;
-            }
-            else if(it != parent)
-                return true ;
-        }
-        return false ;
-    }
-  
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
-        vector<int> vis(V+1, 0) ;//why use -1 always chircut in c++ 0 - false , everything else means true 
-        // i think so dekh le net pe chal gaya ye wala to
+        //BFS
+        vector<int> vis(V ,0) ;
         
         for(int i=0; i<V; i++){
             if(!vis[i]){
-                if(dfs(i, 0, vis, adj))
-                    return true ;
+                queue<pair<int,int>> q;
+                q.push({i, -1}) ;
+                vis[i] = 1 ;
+                
+                while(!q.empty()){
+                    int node = q.front().first ;
+                    int parent = q.front().second ;
+                    q.pop() ;
+                    
+                    for(auto it: adj[node]){
+                        if(!vis[it]){
+                            vis[it] = 1 ;
+                            q.push({it, node}) ;
+                        }
+                        else if(it != parent)
+                            return true ;
+                    }
+                }
             }
         }
         
@@ -35,7 +37,7 @@ class Solution {
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main() {
     int tc;
     cin >> tc;
@@ -57,4 +59,5 @@ int main() {
             cout << "0\n";
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
