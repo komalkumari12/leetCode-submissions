@@ -10,20 +10,20 @@ using namespace std;
 
 class Solution {
   public:
-    bool dfs(int node, vector<int>& vis, vector<int>& dfsVis, vector<int>& ans, vector<int> adj[]){
+    bool dfs(int node, vector<int>& vis, vector<int>& dfsVis, vector<int>& checkSafeNodes, vector<int> adj[]){
         vis[node] =1 ;
         dfsVis[node] = 1 ;
         
         for(auto it: adj[node]){
             if(!vis[it]){
-                if(dfs(it, vis, dfsVis, ans, adj))
+                if(dfs(it, vis, dfsVis, checkSafeNodes, adj))
                 return true ;
             }
             else if(dfsVis[it])
                 return true ;
         }
         
-        ans.push_back(node) ;
+        checkSafeNodes[node] =1 ;
         dfsVis[node] = 0 ;
         return false ;
     }
@@ -36,17 +36,23 @@ class Solution {
         vector<int> vis(V, 0) ;
         vector<int> dfsVis(V, 0) ;
         vector<int> ans ;
+        vector<int> checkSafeNodes(V, 0) ;
         
         for(int i=0; i<V; i++){
             if(!vis[i]){
-                if(!dfs(i, vis, dfsVis,ans, adj)){
+                if(!dfs(i, vis, dfsVis,checkSafeNodes, adj)){
                     // cycle not present
                     // node is safe node
                 }
             }
         }
         
-        sort(ans.begin(), ans.end()) ;
+        
+        for(int i=0; i<V; i++){
+            if(checkSafeNodes[i] == 1){
+                ans.push_back(i) ;
+            }
+        }
         return ans ;
     }
 };
