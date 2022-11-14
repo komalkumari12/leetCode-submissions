@@ -10,49 +10,49 @@ using namespace std;
 
 class Solution {
   public:
-    bool dfs(int node, vector<int>& vis, vector<int>& dfsVis, vector<int>& checkSafeNodes, vector<int> adj[]){
-        vis[node] =1 ;
-        dfsVis[node] = 1 ;
-        
-        for(auto it: adj[node]){
-            if(!vis[it]){
-                if(dfs(it, vis, dfsVis, checkSafeNodes, adj))
-                return true ;
-            }
-            else if(dfsVis[it])
-                return true ;
-        }
-        
-        checkSafeNodes[node] =1 ;
-        dfsVis[node] = 0 ;
-        return false ;
-    }
-    
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        // Any node which is the part of the cycle can not be a safe node
-        // Question changes to find out if nodes in the cycle which are not present inn the cycle
-        // DFS
-        
-        vector<int> vis(V, 0) ;
-        vector<int> dfsVis(V, 0) ;
+        // kahn's Algorithm 
+        // BFS
+        vector<int> revGraph[V] ;
+        vector<int> indegree(V, 0) ;
         vector<int> ans ;
-        vector<int> checkSafeNodes(V, 0) ;
+        queue<int> q;
         
         for(int i=0; i<V; i++){
-            if(!vis[i]){
-                if(!dfs(i, vis, dfsVis,checkSafeNodes, adj)){
-                    // cycle not present
-                    // node is safe node
+            for(auto it: adj[i]){
+                
+                revGraph[it].push_back(i) ;
+            }
+        }
+        
+        for(int i=0; i<V; i++){
+            for(auto it: revGraph[i]){
+                indegree[it]++ ;
+            }
+        }
+        
+        for(int i=0; i<V; i++){
+            if(indegree[i] == 0){
+                q.push(i) ;
+            }
+        }
+        
+        while(!q.empty()){
+            int node = q.front() ;
+            q.pop() ;
+            
+            ans.push_back(node) ;
+            
+            for(auto it: revGraph[node]){
+                indegree[it]-- ;
+                
+                if(indegree[it] == 0){
+                    q.push(it) ;
                 }
             }
         }
         
-        
-        for(int i=0; i<V; i++){
-            if(checkSafeNodes[i] == 1){
-                ans.push_back(i) ;
-            }
-        }
+        sort(ans.begin(), ans.end()) ;
         return ans ;
     }
 };
