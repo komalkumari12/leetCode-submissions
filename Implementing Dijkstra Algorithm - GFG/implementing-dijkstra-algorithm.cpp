@@ -8,37 +8,29 @@ class Solution
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
-    vector <int> dijkstra(int V, vector<vector<int>> graph[], int src)
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int src)
     {
-        // vector<vector<int>> graph(V) ;
-        // for(int u=0; u<V; u++){
-        //     for(auto it: graph[u]){
-        //         int v = graph[u][0] ;
-        //         int wt = graph[u][1] ;
-                
-        //         graph[u].push_back({v, wt}) ;
-        //         graph[v].push_back({u, wt}) ;
-        //     }
-        // }
-        
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> q ;
-        q.push({0, src}) ;
-        
+        set<pair<int,int>> st ;
+        st.insert({0, src}) ;
         vector<int> dist(V, INT_MAX) ;
         dist[src] = 0 ;
         
-        while(!q.empty()){
-            int parentDist = q.top().first ;
-            int parentNode = q.top().second ;
-            q.pop() ;
+        while(!st.empty()){
+            auto it = *(st.begin()) ; 
+            int distance = it.first ;
+            int node = it.second ;
+            st.erase(it) ;
             
-            for(auto it: graph[parentNode]){
+            for(auto it : adj[node]){
                 int v = it[0] ;
                 int wt = it[1] ;
                 
-                if(parentDist + wt < dist[v]){
-                    dist[v] = parentDist + wt ;
-                    q.push({dist[v], v}) ;
+                if(distance + wt < dist[v]){
+                    if(dist[v] != INT_MAX)
+                        st.erase({dist[v], v}) ;
+                        
+                    dist[v] = distance + wt ;
+                    st.insert({dist[v], v}) ;
                 }
             }
         }
