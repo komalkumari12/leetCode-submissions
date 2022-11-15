@@ -9,7 +9,7 @@ using namespace std;
 class Solution {
   public:
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
-        vector<int> graph[N] ;
+        vector<vector<int>> graph(N) ;
         for(int i=0; i<M; i++){
             int u = edges[i][0] ; 
             int v = edges[i][1] ;
