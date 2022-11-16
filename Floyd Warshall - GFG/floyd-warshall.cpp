@@ -31,6 +31,15 @@ class Solution {
 	        }
 	    }
 	    
+	    //To detect cycles in the graph
+	    for(int i=0; i<n ;i++){
+	        if(matrix[i][i] < 0){
+	            cout<<"Cycle present in the graph " ;
+	        }
+	    }
+	    
+	    // Dijkstra does not work if negative cycles are present so, If there is no negative is present Dijkstra could be implemented to find shortest distance form every node to every other node.
+	    // Dijkstra can be immplemented for every node. 
 	    
 	    for(int i=0; i<n ; i++){
 	        for(int j=0; j<n; j++){
