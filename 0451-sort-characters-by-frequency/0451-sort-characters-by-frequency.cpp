@@ -15,12 +15,6 @@ public:
             freqHeap.push({freq, ch}) ;
         }
         
-        // while(!freqHeap.empty()){
-        //     cout<<freqHeap.top().first<<"  "<<freqHeap.top().second ;
-        //     cout<<endl ;
-        //     freqHeap.pop() ;
-        // }
-        
         string str = "" ;
         while(!freqHeap.empty()){
             int freq = freqHeap.top().first ;
