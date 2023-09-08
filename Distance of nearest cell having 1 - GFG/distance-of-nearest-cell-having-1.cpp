@@ -5,46 +5,54 @@ using namespace std;
 // } Driver Code Ends
 class Solution 
 {
+    private :
+        int dx[4] = {1, 0, -1, 0} ;
+        int dy[4] = {0, -1, 0, 1} ;
+        
+        bool inRange(int i, int j, int n, int m){
+            if(i<n && j<m && i>=0 && j>=0)  return true ;
+            return false ;
+        }
     public:
     //Function to find distance of nearest 1 in the grid for each cell.
 	vector<vector<int>>nearest(vector<vector<int>>grid)
 	{
-	    int n= grid.size(), m= grid[0].size() ;
-	    queue<pair<int,int>> q ;
+	    int n = grid.size(); 
+	    int m = grid[0].size() ;
+	    queue<pair<int, int>> q ;
 	    
 	    for(int i=0; i<n; i++){
 	        for(int j=0; j<m; j++){
 	            if(grid[i][j] == 1){
-	                grid[i][j] =0 ;
 	                q.push({i, j}) ;
+	                grid[i][j] = 0 ;
+	               // cout<<i<<" "<<j<<endl ;
 	            }
 	            else{
-	                grid[i][j] =-1 ; 
+	                grid[i][j] = -1 ;
 	            }
 	        }
 	    }
 	    
 	    while(!q.empty()){
-	        int i = q.front().first ;
-	        int j = q.front().second ;
-	        int dist = grid[i][j] ;
-	        q.pop() ;
+	        int size = q.size() ;
 	        
-	        if(i+1 < n && grid[i+1][j] == -1){
-	            q.push({i+1, j}) ;
-	            grid[i+1][j]  =dist+1 ;
-	        }
-	        if(i-1 >= 0 && grid[i-1][j] == -1){
-	            q.push({i-1, j}) ;
-	            grid[i-1][j]  =dist+1 ;
-	        }
-	        if(j+1 < m && grid[i][j+1] == -1){
-	            q.push({i, j+1}) ;
-	            grid[i][j+1]  =dist+1 ;
-	        }
-	        if(j-1 >= 0 && grid[i][j-1] == -1){
-	            q.push({i, j-1}) ;
-	            grid[i][j-1]  =dist+1 ;
+	        for(int i=0; i<size; i++){
+	            int row = q.front().first ;
+	            int col = q.front().second ;
+	            int parDist = grid[row][col] ;
+	            q.pop() ;
+	            
+	            
+	            for(int k = 0; k<4; k++){
+	                int new_row = row + dx[k] ;
+	                int new_col = col + dy[k] ;
+	                
+	                if(inRange(new_row, new_col, n, m) && grid[new_row][new_col] == -1){
+	                    q.push({new_row, new_col}) ;
+	                    grid[new_row][new_col] = parDist+1 ;
+	                }
+	            }
 	        }
 	    }
 	    
