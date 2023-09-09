@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -86,7 +86,7 @@ Node* buildTree(string str)
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 /* The structure of the binary tree is as follows
 struct Node
 {
@@ -102,39 +102,38 @@ class Solution{
     bool check(Node *root)
     {
         if(!root) return true ;
-        queue<Node*> q;
+        
+        queue<Node*> q ;
         q.push(root) ;
         
-        int depth = 0, level1 = -1, level2 = -1 ;
+        int depth = 0, level1 =-1, level2= -1  ;
+        
         while(!q.empty()){
             int size = q.size() ;
+            depth++ ;
             
             for(int i=0; i<size; i++){
                 Node* node = q.front() ;
                 q.pop() ;
-                depth++ ;
                 
-                if(node->left)
-                    q.push(node->left) ;
-                if(node->right)
-                    q.push(node->right) ;  
-                    
+                if(node->left)  q.push(node->left) ;
+                if(node->right)  q.push(node->right) ;
+                
                 if(!node->left && !node->right){
                     if(level1 == -1)
                         level1 = depth ;
                     else
                         level2 = depth ;
-                }    
+                }
             }
-            
-            if(!q.empty()  &&  level1 != level2) return false ; 
         }
         
+        if(level1 != level2)    return false ;
         return true ;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 // Driver program to test size function
 int main()
 {
@@ -151,4 +150,5 @@ int main()
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
