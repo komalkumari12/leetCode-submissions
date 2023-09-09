@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for C++
 
 
@@ -85,7 +85,7 @@ Node* buildTree(string str) {
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function Template for C++
 /*Structure of the node of the binary tree is as
 struct Node {
@@ -105,16 +105,18 @@ class Solution{
     //Function to store the zig zag order traversal of tree in a list.
     vector <int> zigZagTraversal(Node* root)
     {
-    	if(!root) return {} ;
+    	//By reversing the array
     	
-    	queue<Node*> q;
+    	if(!root)   return {} ;
+    	queue<Node*> q ;
     	q.push(root) ;
     	
-    	bool dir = true ;   //left -> right
-    	vector<int> ans ;
+    	vector<int> zigzagOrder ;
+    	int depth =0 ;
     	
     	while(!q.empty()){
     	    int size = q.size() ;
+    	    
     	    vector<int> level ;
     	    
     	    for(int i=0; i<size; i++){
@@ -123,27 +125,30 @@ class Solution{
     	        
     	        level.push_back(node->data) ;
     	        
-    	        if(node->left) q.push(node->left) ;
+    	        if(node->left)  q.push(node->left) ;
     	        if(node->right) q.push(node->right) ;
     	    }
     	    
-    	    if(dir)
+    	    if(depth % 2 == 0){
     	        for(int i=0; i<level.size(); i++){
-    	            ans.push_back(level[i]) ;
+    	            zigzagOrder.push_back(level[i]) ;
     	        }
-    	    if(!dir)
-    	        for(int i =level.size()-1; i>=0; i--){
-    	            ans.push_back(level[i]) ;
+    	    }
+    	    else{
+    	        for(int i=level.size()-1; i>=0; i--){
+    	            zigzagOrder.push_back(level[i]) ;
     	        }
-    	        
-    	    dir = !dir ;     
+    	    }
+    	    
+    	    depth++ ;
     	}
     	
-    	return ans ;
+    	
+    	return zigzagOrder ;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 /* Driver program to test size function*/
 
@@ -172,4 +177,5 @@ int main() {
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
