@@ -23,8 +23,10 @@ class Solution
         }
         
         while(!st.empty()){
-            q.push(st.top()) ;
+            int ele = st.top() ;
             st.pop() ;
+            
+            q.push(ele) ;
         }
         
         return q ;
