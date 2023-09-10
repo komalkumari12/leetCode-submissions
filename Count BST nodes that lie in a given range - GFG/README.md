@@ -1,7 +1,6 @@
 # Count BST nodes that lie in a given range
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given a Binary Search Tree (BST) and a range <strong>l-h(inclusive)</strong>, count the number of nodes in the BST that lie in the given range. </span></p>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given a Binary Search Tree (BST) and a range <strong>l-h(inclusive)</strong>, count the number of nodes in the BST that lie in the given range. </span></p>
 
 <ul>
 	<li><span style="font-size:18px">The values smaller than root go to the left side</span></li>
@@ -45,5 +44,4 @@ given range.</span>
 <p><span style="font-size:18px"><strong>Constraints:</strong><br>
 1 &lt;= Number of nodes &lt;= 100<br>
 1 &lt;= l &lt; h &lt; 10<sup>3</sup></span></p>
- <p></p>
-            </div>
+</div>
