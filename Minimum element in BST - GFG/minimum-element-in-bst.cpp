@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -89,14 +89,41 @@ int main() {
         cout << minValue(root) << endl;
     }
     return 1;
-}// } Driver Code Ends
+}
+// } Driver Code Ends
 
 
 // Function to find the minimum element in the given BST.
+
+/*
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+// Utility function to create a new Tree Node
+Node* newNode(int val) {
+    Node* temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
+
+    return temp;
+}
+*/
+
+void findMinVal(Node* root, int& minVal){
+    if(!root)    return ;
+    
+    minVal = root->data ;
+    
+    findMinVal(root->left, minVal) ;
+}
+
 int minValue(Node* root) {
-    if(!root) return -1 ;
-    if(!root->left) return root->data ;
+    if(!root)   return -1 ;
     
-    return minValue(root->left) ;
-    
+    int minVal = INT_MAX ;
+    findMinVal(root, minVal) ;
+    return minVal ;
 }
