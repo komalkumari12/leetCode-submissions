@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX_HEIGHT 100000
@@ -90,43 +90,44 @@ Node* buildTree(string str)
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //Function to return a list containing the bottom view of the given tree.
 
 class Solution {
   public:
     vector <int> bottomView(Node *root) {
-        //last node of every vertical line
-        if(!root) return {} ;
+        if(!root)   return {} ;
         
-        queue<pair<Node*, int>> q;
+        queue<pair<Node*, int>> q ;    //Node, vertical Level
         q.push({root, 0}) ;
-        
         map<int, int> mpp ;
         
         while(!q.empty()){
-            Node* node = q.front().first ;
-            int level = q.front().second ;
-            q.pop() ;
+            int size = q.size() ;
             
-            mpp[level] = node->data ;
-            
-            if(node->left)
-                q.push({node->left, level -1}) ;
-            
-            if(node->right)
-                q.push({node->right, level +1}) ;
+            for(int i=0; i<size; i++){
+                Node* node = q.front().first ;
+                int level = q.front().second ;
+                q.pop() ;
+                
+                mpp[level] = node->data ;
+                
+                if(node->left)  q.push({node->left, level-1}) ;
+                if(node->right)  q.push({node->right, level+1}) ;
+                
+            }
         }
         
         vector<int> ans ;
-        for(auto it: mpp)
+        for(auto it: mpp){
             ans.push_back(it.second) ;
+        }
         
         return ans ;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main() {
     int t;
@@ -147,4 +148,5 @@ int main() {
 }
 
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
