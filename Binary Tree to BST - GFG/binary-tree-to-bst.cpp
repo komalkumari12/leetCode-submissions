@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial template for C++
 
 #include <bits/stdc++.h>
@@ -90,7 +90,7 @@ Node* buildTree(string str)
     return root;
 }
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function template for C++
 
 /* The Node structure is
@@ -108,44 +108,49 @@ struct Node
 */
 
 class Solution{
+    private: 
+    
+    void inOrderTrav(Node* root, vector<int>& inOrder){
+        if(!root)   return ;
+        
+        inOrderTrav(root->left, inOrder) ;
+        inOrder.push_back(root->data) ;
+        inOrderTrav(root->right, inOrder) ;
+    }
+    
+    void modifyTree(Node* root, int& index, vector<int>& inOrder){
+        if(!root)   return ;
+        
+        modifyTree(root->left, index, inOrder) ;
+        
+        root->data = inOrder[index] ;
+        index++ ;
+        
+        modifyTree(root->right, index, inOrder) ;
+    }
   public:
     // The given root is the root of the Binary Tree
     // Return the root of the generated BST
-    
-    void inorder(Node* root, vector<int>& in){
-        if(!root) return  ;
-        
-        inorder(root->left, in) ;
-        in.push_back(root->data) ;
-        inorder(root->right, in) ;
-    }
-    
-    void correctTree(Node* root, vector<int>& in, int& ind){
-        if(!root) return ;
-        
-        correctTree(root->left, in, ind) ;
-        if(root->data != in[ind]){
-            root->data = in[ind] ;
-        }
-        ind++ ;
-        // root->data = in[ind++] ;
-        correctTree(root->right, in, ind) ;
-    }
-    
     Node *binaryTreeToBST (Node *root)
     {
-        vector<int> in ;
-        inorder(root, in) ;
-        sort(in.begin(), in.end()) ;
+        vector<int> inOrder ;
+        if(!root)   return NULL ;
         
-        int ind =0 ;
-        correctTree(root, in, ind) ;
+        inOrderTrav(root, inOrder) ;
+        sort(inOrder.begin(), inOrder.end()) ;
+        
+        // for(int i=0; i<inOrder.size(); i++){
+        //     cout<<inOrder[i]<<" " ;
+        // }
+        
+        int index =0 ;
+        modifyTree(root, index, inOrder) ;
         
         return root ;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main()
 {
     int t;
@@ -162,4 +167,5 @@ int main()
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
