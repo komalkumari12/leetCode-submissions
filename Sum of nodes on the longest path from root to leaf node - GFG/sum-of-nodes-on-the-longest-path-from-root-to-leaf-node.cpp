@@ -116,43 +116,37 @@ struct Node
 */
 class Solution
 {
-    private:
-    pair<int,int> solve(Node* root){
-        if(!root)   return {0, 0} ;
-        
-        pair<int, int> left = solve(root->left) ;
-        pair<int, int> right = solve(root->right) ;
-        
-        // cout<<root->data<<" " <<left.first<<"  "<<left.second<<"  "<<right.first<<"  "<<right.second<<"  " ;
-        
-        if(left.first > right.first){
-            // cout<<"Left Height greater "<<endl ;
-            return {1 + left.first, root->data + left.second} ;
-        }
-        
-        if(left.first < right.first){
-            // cout<<"right Height greater "<<endl ;
-            return {1 + right.first, root->data + right.second} ;
-        }
-        
-        // cout<<"Equal Height"<<endl ;
-        if(left.second > right.second){
-            // cout<<"Equal Height : Left sum greater "<<endl ;
-            return {1 + left.first, root->data + left.second} ;
-        }
-        
-        // cout<<"Equal Height : right sum greater "<<endl ;
-        return {1 + right.first, root->data + right.second} ;
-        
-    }
 public:
     
     int sumOfLongRootToLeafPath(Node *root)
     {
         if(!root)   return 0 ;
+        queue<pair<Node*, pair<int,int>>> q ;           // Node, {height, sum}
+        q.push({root,{0, root->data}}) ;
         
-        pair<int,int> ans = solve(root) ;
-        return ans.second ;
+        int maxHeight = INT_MIN ;
+        int maxSum = INT_MIN ;
+        while(!q.empty()){
+            int size = q.size() ;
+            
+            for(int i=0; i<size; i++){
+                Node* node= q.front().first ;
+                int height = q.front().second.first ;
+                int sum = q.front().second.second ;
+                q.pop() ;
+                
+                if(height == maxHeight)maxSum = max(maxSum, sum) ;
+                if(height > maxHeight)  {
+                    maxSum = sum ;
+                    maxHeight = height ;
+                }
+                
+                if(node->left)  q.push({node->left, {height+1, sum + node->left->data}}) ;
+                if(node->right)  q.push({node->right, {height+1, sum + node->right->data}}) ;
+            }
+        }
+        
+        return maxSum ;
     }
 };
 
