@@ -8,36 +8,25 @@ using namespace std;
 
 class Solution {
   public:
-    // void bfs(int node, vector<int>& vis, vector<int> adj[]){
-    //     queue<int> q ;
-    //     q.push(0) ;
-    //     vis[node] = 1 ;
+    void bfs(int src, vector<int>& vis, vector<int> adj[]){
+        queue<int> q ;
+        q.push(src) ;
         
-    //     while(!q.empty()){
-    //         int node = q.front() ;
-    //         q.pop() ;
+        while(!q.empty()){
+            int node = q.front() ;
+            q.pop() ;
             
-    //         vis[node] = 1 ;
+            vis[node] = 1 ;
             
-    //         for(auto it: adj[node]){
-    //             if(!vis[it]){
-    //                 vis[it] = 1 ;
-    //                 q.push(it) ;
-    //             }
-    //         }
-    //     }
-    // }
-    
-    void dfs(int node, vector<int>& vis, vector<int> adj[]){
-        vis[node] = 1 ;
-        
-        for(auto it: adj[node]){
-            if(!vis[it]){
-                dfs(it, vis, adj) ;
-                vis[it] = 1 ;
+            for(auto it: adj[node]){
+                if(!vis[it]){
+                    vis[it] =1 ;
+                    q.push(it) ;
+                }
             }
         }
     }
+    
     
     int numProvinces(vector<vector<int>> graph, int V) {
         // DFS
@@ -52,21 +41,13 @@ class Solution {
             }
         }
         
-        // for(int i=0; i<adj.size(); i++){
-        //     cout<<i<<" -> " ;
-        //     for(auto it                                                                                                                                                                                          ){
-        //         cout<<j<<" ";
-        //     }
-        //     cout<<endl ;
-        // }
-        
         vector<int> vis(V, 0) ;
         int components = 0 ;
         
         for(int i=0; i<V; i++){
             if(vis[i] == 0){
                 components++ ;
-                dfs(i, vis, adj) ;
+                bfs(i, vis, adj) ;
             }
         }
         
