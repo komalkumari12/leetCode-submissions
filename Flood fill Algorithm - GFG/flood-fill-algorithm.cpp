@@ -6,8 +6,7 @@ using namespace std;
 class Solution {
 public:
     void dfs(int i, int j, int color, int newColor, vector<vector<int>>& image){
-        if(i<0 || i >=image.size() || j<0 || j>= image[0].size() || image[i][j]!= color)
-            return  ;
+        if(i<0 || j<0 || i>=image.size() || j>=image[0].size() || image[i][j] != color)     return ;
         
         image[i][j] = newColor ;
         
@@ -16,12 +15,14 @@ public:
         dfs(i, j+1, color, newColor, image) ;
         dfs(i, j-1, color, newColor, image) ;
     }
-
+    
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        if(image[sr][sc] != newColor)
-            dfs(sr,sc, image[sr][sc], newColor, image) ;
-            
-        return image ;        
+        // DFS
+        
+        if(image[sr][sc] == newColor)   return image ;
+        
+        dfs(sr, sc, image[sr][sc], newColor, image) ;
+        return image ;
     }
 };
 
